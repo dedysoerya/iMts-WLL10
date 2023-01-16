@@ -21,10 +21,12 @@
 #define TXD02 14 // D5
 
 /*ADD YOUR PASSWORD BELOW*/
-// const char *ssid = "such a person";
-// const char *password = "zidanedane";
+//const char *ssid = "such a person";
+//const char *password = "zidanedane";
 const char *ssid = "iMats";
 const char *password = "adminmavens";
+//const char *ssid = "realme 2 Pro";
+//const char *password = "sembarang123";
 
 const char *mqtt_server = "118.98.64.212";
 const char *userBroker = "admin";
@@ -43,15 +45,15 @@ bool loadPoweredOn = true;
 unsigned long startTime, currentTime, currentTime2, previousMillis;
 
 String namaData[] = {" WL ", " BR ", "TEM ", "VPV ", "IPV ", "VBAT", "IBAT"};
-String id = "iMts-WLL10000";
+String id = "iMts-WLL10001";
 int data[50] = {
-    1234,
-    1234,
-    1234,
-    1234,
-    1234,
-    1234,
-    1234,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
 };
 
 const long periodeKirimData = 20000;
@@ -143,7 +145,7 @@ void sendJsonData(String id, int wl, int br, int tem, int vpv, int ipv, int vbat
   Serial.println("Kirim data analisa to MQTT Broker");
   Serial.println(JSONmessageBuffer);
 
-  if (client.publish("logger/iMts-WL10", JSONmessageBuffer) == true)
+  if (client.publish("imats/logger", JSONmessageBuffer) == true)
   {
     Serial.println("Success sending message");
   }
@@ -307,7 +309,7 @@ void setup()
   Serial.begin(9600);
   connectToWiFi();
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
-            { request->send(200, "text/plain", "Hi! Imats WLL10 Running..."); });
+            { request->send(200, "text/plain", "Hi, Imats WLL10 Running..."); });
 
   AsyncElegantOTA.begin(&server); // Start ElegantOTA
   server.begin();
